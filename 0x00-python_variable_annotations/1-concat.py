@@ -2,6 +2,7 @@
 """ concat 2 strings with type-annotated notation """
 
 
-def concat(a: str, b: str) -> str:
+def concat(str1: str, str2: str) -> str:
     ''' add 2 floats '''
-    return a + b
+
+    return str1 + str2
