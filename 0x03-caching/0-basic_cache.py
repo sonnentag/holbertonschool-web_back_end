@@ -1,13 +1,14 @@
 #!/usr/bin/env python3
-"""  0. Basic dictionary
-Basic get/put. No replacement/expiration or MAXSIZE/MAX_ITEMS.
+""" 0. Basic dictionary
+  - Basic get/put. No replacement/expiration or MAXSIZE/MAX_ITEMS.
 """
 
 from base_caching import BaseCaching
 
 
 class BasicCache(BaseCaching):
-
+    ''' Class demonstrating a basic caching system
+    '''
     def put(self, key, item):
         ''' add record to cache
         '''
