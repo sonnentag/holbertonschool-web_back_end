@@ -4,7 +4,7 @@
 
 import csv
 import math
-from typing import List, Tuple
+from typing import List, Tuple, Dict
 
 
 class Server:
@@ -34,7 +34,8 @@ class Server:
 
         return (self.dataset()[start:end])
 
-    def get_hyper(self, page: int = 1, page_size: int = 10) -> List[List]:
+    def get_hyper(self, page: int = 1, page_size: int = 10)\
+            -> Dict[str, object]:
         """ return paginated 'hypermedia'
         """
         total_pages = math.ceil(int(len(self.dataset())) / page_size)
