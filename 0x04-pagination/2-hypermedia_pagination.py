@@ -38,12 +38,14 @@ class Server:
             -> Dict[str, object]:
         """ return paginated 'hypermedia'
         """
+        assert all(isinstance(i, int) for i in [page, page_size]) and page > 0
         total_pages = math.ceil(int(len(self.dataset())) / page_size)
+        data = self.get_page(page, page_size),
 
         return {
-            "page_size": len(self.get_page(page, page_size)),
+            "page_size": len(data),
             "page": page,
-            "data": self.get_page(page, page_size),
+            "data": data, 
             "next_page": page + 1 if page < total_pages else None,
             "prev_page": page - 1 if page else None,
             "total_pages": total_pages
