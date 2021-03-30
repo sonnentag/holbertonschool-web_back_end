@@ -26,7 +26,7 @@ class RedactingFormatter(logging.Formatter):
         super(RedactingFormatter, self).__init__(self.FORMAT)
 
     def format(self, record: logging.LogRecord) -> str:
-        """ filter values in incoming log records
+        """ format records via filter_datum
         """
         return filter_datum(self.fields, self.REDACTION,
                             super().format(record), self.SEPARATOR)
@@ -43,7 +43,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
 
 
 def get_logger() -> logging.Logger:
-    """
+    """ return defined logger
     """
     logger = logging.getLogger("user_data")
     logger.setLevel(logging.INFO)
@@ -55,7 +55,8 @@ def get_logger() -> logging.Logger:
 
 
 def get_db() -> mysql.connector.connection.MySQLConnection:
-    """returns a connector to the database"""
+    """ return connection to database
+    """
     return mysql.connector.connect(
         user=os.getenv('PERSONAL_DATA_DB_USERNAME'),
         password=os.getenv('PERSONAL_DATA_DB_PASSWORD', default=''),
@@ -67,13 +68,14 @@ def main():
     """ main
     """
     conn = get_db()
-    cursor = conn.cursor()
+    cursor = conn.cursor(dictionary=True)
     cursor.execute("SELECT * FROM users;")
-    columns = tuple( [d[0] for d in cursor.description] )
     logger = get_logger()
 
     for user in cursor:
-        resultstring = str(zip(columns, user))
+        resultstring = ""
+        for key in user:
+            resultstring += "{}={}; ".format(key, user[key])
         logger.log(logging.INFO, resultstring)
 
 
