@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-""" 6. Check valid password
+""" encrypt and validate passwords
 """
 import bcrypt
 
@@ -12,6 +12,7 @@ def hash_password(password: str) -> bytes:
 
 
 def is_valid(hashed_password: bytes, password: str) -> bool:
-    """
+    """ is_valid
+      - validate encrypted password
     """
     return bcrypt.checkpw(bytes(password, 'utf-8'), hashed_password)
