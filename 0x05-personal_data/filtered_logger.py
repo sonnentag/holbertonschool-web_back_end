@@ -38,7 +38,7 @@ def filter_datum(fields: List[str], redaction: str, message: str,
       - '[^{separator}]+' matches while there is not a seperator
     """
     for f in fields:
-        message = re.sub(fr'{f}=[^{separator}]+', f' {f}={redaction}', message)
+        message = re.sub(fr'{f}=[^{separator}]+', f'{f}={redaction}', message)
     return message
 
 
