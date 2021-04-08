@@ -39,13 +39,15 @@ class BasicAuth(Auth):
     def extract_user_credentials(self,
                                  decoded_base64_authorization_header: str
                                  ) -> (str, str):
-        """ returns the user email and password from the Base64 decoded value 
+        """ returns the user email and password from the Base64 decoded value
         """
-        if decoded_base64_authorization_header:
-            if isinstance(decoded_base64_authorization_header, str):
-                if ':' in decoded_base64_authorization_header:
-                    return decoded_base64_authorization_header.split(':', 1)
-        return (None, None)
+        if not decoded_base64_authorization_header:
+            return (None, None)
+        if not isinstance(decoded_base64_authorization_header, str):
+            return (None, None)
+        if ':' not in decoded_base64_authorization_header:
+            return (None, None)
+        return tuple(decoded_base64_authorization_header.split(':', 1))
 
     def user_object_from_credentials(self,
                                      user_email: str,
@@ -56,7 +58,8 @@ class BasicAuth(Auth):
             return None
         if not user_pwd or not isinstance(user_pwd, str):
             return None
-        users = User.search({'email': user_email})
+        u = User()
+        users = u.search({'email': user_email})
         for user in users:
             if user.is_valid_password(user_pwd):
                 return user
@@ -67,10 +70,8 @@ class BasicAuth(Auth):
         """
         auth_header = self.authorization_header(request)
         extract_header = self.extract_base64_authorization_header(auth_header)
-        decode_header = self.decode_base64_authorization_header(
-                b64_extracted_auth_header)
-        user_credentials = self.extract_user_credentials(
-                b64_decoded_auth_header)
+        decode_header = self.decode_base64_authorization_header(extract_header)
+        user_credentials = self.extract_user_credentials(decode_header)
         user_object = self.user_object_from_credentials(
                 user_credentials[0], user_credentials[1])
         return user_object
