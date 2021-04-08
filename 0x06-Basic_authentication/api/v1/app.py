@@ -30,13 +30,10 @@ def before_request() -> str:
                  '/api/v1/unauthorized/',
                  '/api/v1/forbidden/']
     if not auth or not auth.require_auth(request.path, path_list):
-        return
+        return None
 
     if auth.authorization_header(request) is None:
         abort(401)
-    if auth.authorization_header(request):
-        abort(403)
-
     if auth.current_user(request) is None:
         abort(403)
 
