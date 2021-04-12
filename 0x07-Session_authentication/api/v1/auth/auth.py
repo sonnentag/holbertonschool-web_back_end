@@ -24,9 +24,11 @@ class Auth():
     def authorization_header(self, request=None) -> str:
         """ returns auth header
         """
-        if request and request.headers.get('Authorization'):
-            return request.headers.get('Authorization')
-        return None
+        if request is None:
+            return None
+        if not request.headers.get('Authorization'):
+            return None
+        return request.headers.get('Authorization')
 
     def current_user(self, request=None) -> TypeVar('User'):
         """ returns None for now
@@ -36,6 +38,6 @@ class Auth():
     def session_cookie(self, request=None):
         """ Return current session cookie
         """
-        if request:
-            return request.cookies.get(os.getenv("SESSION_NAME"))
-        return None
+        if request is None:
+            return None
+        return request.cookies.get(os.getenv("SESSION_NAME"))
