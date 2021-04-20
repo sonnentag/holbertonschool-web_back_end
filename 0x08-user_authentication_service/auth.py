@@ -2,11 +2,11 @@
 """ Auth module
 """
 
-from uuid import uuid4
 import bcrypt
-from db import DB
 from user import User
+from db import DB
 from sqlalchemy.orm.exc import NoResultFound
+from uuid import uuid4
 
 
 def _hash_password(password: str) -> str:
@@ -22,7 +22,7 @@ def _generate_uuid() -> str:
 
 
 class Auth:
-    """ Auth class
+    """ Auth class to interact with the authentication database.
     """
     def __init__(self):
         self._db = DB()
@@ -45,6 +45,7 @@ class Auth:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
             return False
+
         else:
             return bcrypt.checkpw(password=password.encode(),
                                   hashed_password=user.hashed_password)
@@ -56,8 +57,10 @@ class Auth:
             user = self._db.find_user_by(email=email)
         except NoResultFound:
             return None
+
         else:
             user.session_id = _generate_uuid()
+
             return user.session_id
 
     def get_user_from_session_id(self, session_id: str) -> str:
@@ -92,6 +95,7 @@ class Auth:
             raise ValueError
 
         user.reset_token = _generate_uuid()
+
         return user.reset_token
 
     def update_password(self, reset_token: str, password: str) -> None:
