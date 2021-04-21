@@ -27,8 +27,8 @@ class TestGithubOrgClient(TestCase):
           - is the expected one based on the mocked payload
         """
         with patch(GithubOrgClient,
-                          new_callable=PropertyMock,
-                          return_value={"repos_url": "google"}) as mock_url:
+                   new_callable=PropertyMock,
+                   return_value={"repos_url": "google"}) as mock_url:
             response = GithubOrgClient('google')
             repo_url = response._public_repos_url
 
@@ -51,6 +51,15 @@ class TestGithubOrgClient(TestCase):
 
 
 class TestIntegrationGithubOrgClient(unittest.TestCase):
-    """ test github client integration 
+    """ test github client integration
     """
-    pass
+
+    def test_public_repos(self):
+        """ test repos
+        """
+        pass
+
+    def test_public_repos_with_license(public_repos, license="apache-2.0"):
+        """ test license
+        """
+        pass
