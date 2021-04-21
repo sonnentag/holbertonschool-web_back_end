@@ -46,11 +46,11 @@ class DB:
     def update_user(self, user_id: int, **kwargs) -> None:
         """  update user
         """
-        user = self.find_user_by(id=user_id)
+        u = self.find_user_by(id=user_id)
         for key, val in kwargs.items():
-            if not hasattr(user, key):
+            if key not in u.__dict__: 
                 raise ValueError
-            setattr(user, key, val)
+            setattr(u, key, val)
             self._session.add(userFound)
             self._session.commit()
         return None
