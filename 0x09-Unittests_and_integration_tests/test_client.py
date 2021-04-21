@@ -22,8 +22,6 @@ class TestGithubOrgClient(TestCase):
             f'https://api.github.com/orgs/{org}'
             )
 
-    @patch('client.GithubOrgClient._public_repos_url',
-           new_callable=PropertyMock)
     def test_public_repos_url(self):
         """ Test that the result of _public_repos_url
           - is the expected one based on the mocked payload
@@ -35,3 +33,6 @@ class TestGithubOrgClient(TestCase):
             repo_url = response._public_repos_url
 
         self.assertEqual(repo_url, mock_url.return_value['repos_url'])
+
+
+
