@@ -51,6 +51,6 @@ class DB:
             if key not in u.__dict__: 
                 raise ValueError
             setattr(u, key, val)
-            self._session.add(userFound)
+            self._session.add(u)
             self._session.commit()
         return None
