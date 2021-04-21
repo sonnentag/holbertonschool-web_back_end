@@ -21,3 +21,17 @@ class TestGithubOrgClient(TestCase):
         mock_test.assert_called_once_with(
             f'https://api.github.com/orgs/{org}'
             )
+
+    @patch('client.GithubOrgClient._public_repos_url',
+           new_callable=PropertyMock)
+    def test_public_repos_url(self):
+        """ Test that the result of _public_repos_url
+          - is the expected one based on the mocked payload
+        """
+        with patch(GithubOrgClient,
+                          new_callable=PropertyMock,
+                          return_value={"repos_url": "google"}) as mock_url:
+            response = GithubOrgClient('google')
+            repo_url = response._public_repos_url
+
+        self.assertEqual(repo_url, mock_url.return_value['repos_url'])
