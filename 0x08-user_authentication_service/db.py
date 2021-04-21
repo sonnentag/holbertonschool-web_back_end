@@ -52,5 +52,5 @@ class DB:
                 raise ValueError
             setattr(u, key, val)
             self._session.add(u)
-            self._session.commit()
+        self._session.commit()
         return None
