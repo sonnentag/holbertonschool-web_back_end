@@ -43,12 +43,14 @@ class DB:
         """
         return self._session.query(User).filter_by(**kwargs).one()
 
-    def update_user(self, user_id: int, **kwargs: dict) -> None:
+    def update_user(self, user_id: int, **kwargs) -> None:
         """  update user
         """
-        u = self.find_user_by(id=user_id)
+        user = self.find_user_by(id=user_id)
         for key, val in kwargs.items():
-            if not hasattr(u, key):
+            if not hasattr(user, key):
                 raise ValueError
-            setattr(u, key, val)
-        self._session.commit()
+            setattr(user, key, val)
+            self._session.add(userFound)
+            self._session.commit()
+        return None
