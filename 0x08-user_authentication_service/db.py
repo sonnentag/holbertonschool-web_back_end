@@ -38,10 +38,10 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: dict) -> User:
+    def find_user_by(self, **kwargs) -> User:
         """ find user by
         """
-        return self._session.query(User).filter_by(**kwargs).first()
+        return self._session.query(User).filter_by(**kwargs).one()
 
     def update_user(self, user_id: int, **kwargs: dict) -> None:
         """  update user
