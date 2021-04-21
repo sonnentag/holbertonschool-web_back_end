@@ -38,7 +38,7 @@ class DB:
         self._session.commit()
         return user
 
-    def find_user_by(self, **kwargs: dict) -> object:
+    def find_user_by(self, **kwargs: dict) -> User:
         """ find user by
         """
         return self._session.query(User).filter_by(**kwargs).first()
