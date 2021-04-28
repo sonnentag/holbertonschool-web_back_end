@@ -1,22 +1,22 @@
 #!/usr/bin/env python3
-"""
+""" 0x0B. Redis basic
 """
 import redis
-from typing import Union
+from typing import Union, Callable, Optional
 import uuid
 
 
 def count_calls(method: Callable) -> Callable:
-    """
+    """ count_calls method
     """
     key = method.__qualname__
 
     @wraps(method)
-    def wrapper(self, *args, **k):
-        """
+    def wrapper(self, *args, **kwargs):
+        """ wrapper function
         """
         self._redis.incr(key)
-        return method(self, *args, **keywords)
+        return method(self, *args, **kwargs)
     return wrapper
 
 
@@ -38,7 +38,8 @@ class Cache():
 
         return key
 
-    def get(self, key: str, fn: Optional[Callable] = None):
+    def get(self, key: str, fn: Optional[Callable] = None)\
+            -> Union[str, bytes, int, float]:
         """ convert data back to desired format.
         """
         data = self._redis.get(key)
