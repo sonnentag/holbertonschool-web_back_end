@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
-"""
+""" 12. Log stats
 """
 from pymongo import MongoClient
+
 
 if __name__ == "__main__":
     client = MongoClient('mongodb://localhost:27017/')
@@ -11,8 +12,9 @@ if __name__ == "__main__":
     print(db.count_documents({}), "logs")
     print("Methods:")
     for m in method:
-        print(f'\tmethod {m}: db.countDocuments()')
+        print(f'\tmethod {m}:', db.count_documents({"method": m}))
 
     print(db.count_documents(
-        {"method": "GET", "path": "/status"}
-        ) "status check")
+        {"method": "GET", "path": "/status"}),
+        "status check"
+        )
