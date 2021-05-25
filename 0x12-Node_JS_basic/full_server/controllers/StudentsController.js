@@ -12,6 +12,7 @@ export default class StudentsController {
         response.send(500, error.message);
       });
   }
+
   static getAllStudentsByMajor(request, response, DB) {
     const { major } = request.params;
 
