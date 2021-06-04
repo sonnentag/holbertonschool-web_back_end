@@ -8,6 +8,6 @@ export default function createPushNotificationsJobs(jobs, queue) {
 
   queueJob.on('complete', () => console.log(`Notification job ${queueJob.id} completed`));
   queueJob.on('failed', (error) => console.log(`Notification job ${queueJob.id} failed: ${error}`));
-  queueJob.on('progress', (progress) => console.log(`Notification job ${queueJob.id} ${progress} complete`));
+  queueJob.on('progress', (progress) => console.log(`Notification job ${queueJob.id} ${progress}% complete`));
   });
 }
